@@ -11,7 +11,6 @@ void selection_sort(int *array, size_t size)
 {
 	size_t i, j, min_idx;
 	int temp;
-	int counter = 0;
 
 	for (i = 0; i < size - 1; i++)
 	{
@@ -24,11 +23,10 @@ void selection_sort(int *array, size_t size)
 				if (min_idx == 0 || array[min_idx] > array[j])
 				{
 					min_idx = j;
-					counter++;
 				}
 			}
 		}
-		if (counter != 0)
+		if (min_idx != i)
 		{
 			temp = array[i];
 			array[i] = array[min_idx];
