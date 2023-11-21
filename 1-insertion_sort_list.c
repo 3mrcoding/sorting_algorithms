@@ -1,62 +1,38 @@
 #include "sort.h"
 
-
-void swap(listint_t **p_1, listint_t **p_2)
-{
-    listint_t *temp1, *temp2;
-
-    temp2 = (*p_1)->prev;
-    temp1 = (*p_2)->next;
-    (*p_1)->next = temp1;
-    temp1->prev = *p_1;
-    (*p_2)->next = *p_1;
-    temp2->next = *p_2;
-    (*p_1)->prev = *p_2;
-    (*p_2)->prev = temp2;
-}
+/**
+ * insertion_sort_list - Prints an array of integers
+ *
+ * @list: The array to be printed
+ */
 
 void insertion_sort_list(listint_t **list)
 {
-    listint_t *p1, *p2, *tmp;
+	listint_t *current, *temp;
 
-    tmp = *list;
-    p1 = *list;
-    p2 = p1->next;
+	if (list == NULL || *list == NULL)
+		return;
 
-    while (p2->next != NULL)
-    {
-        if (p2->n < p1->n)
-        {
-            swap(&p1, &p2);
-            while (tmp->prev != NULL)
-            {
-                if (p1->n < tmp->n)
-                {
-                    swap(&tmp, &p1);
-                    tmp = tmp->prev;
-                    p1 = p1->prev;
-                    if (tmp->n < p1->n)
-                    {
-                        p2 = p2->next;
-                        p1 = p2->prev;
-                        tmp = p1->prev;
-                        break;
-                    }
-                }
-                else
-                {
-                    p2 = p2->next;
-                    p1 = p1->next;
-                    tmp = p1->prev;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            p2 = p2->next;
-            p1 = p2->prev;
-            tmp = p1->prev;
-        }
-    }
+	current = (*list)->next;
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		while (temp->prev != NULL && temp->prev->n > temp->n)
+		{
+			temp->prev->next = temp->next;
+			if (temp->next != NULL)
+				temp->next->prev = temp->prev;
+
+			temp->next = temp->prev;
+			temp->prev = temp->prev->prev;
+			temp->next->prev = temp;
+
+			if (temp->prev != NULL)
+				temp->prev->next = temp;
+			else
+				*list = temp;
+			print_list(*list);
+		}
+	}
 }
