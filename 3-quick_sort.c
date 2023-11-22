@@ -62,9 +62,11 @@ void quicksort(int *arr, int l, int r, int size)
 
 	i = partition(arr, l, r, size);
 
-	quicksort(arr, l, i - 1, size);
+	if (i != l)
+		quicksort(arr, l, i - 1, size);
 	quicksort(arr, i + 1, r, size);
 }
+
 
 /**
  * quick_sort - Creates a doubly linked list from an array of integers
